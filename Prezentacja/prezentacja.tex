@@ -46,6 +46,16 @@
 \tableofcontents
 \end{frame}
 
+\begin{frame}{Materiały}
+Link: \url{https://github.com/arokasprz100/Spring-seminars} \\
+Repozytorium zawiera:
+\begin{itemize}
+\item prezentację
+\item przykłady
+\item zadanie domowe wraz z instrukcją
+\end{itemize}
+\end{frame}
+
 \section{Wprowadzenie do Spring Boot}
 
 \begin{frame}
@@ -80,13 +90,13 @@ Spring Boot nie jest więc jedynie narzędziem do szybkiego generowania projekt�
 \end{frame}
 
 \begin{frame}
-\frametitle{Aplikacja w Spring vs. Spring Boot}
-Przykład 1: Porównanie aplikacji napisanej w Spring z analogiczną w Spring Boot 
+\frametitle{Spring vs. Spring Boot}
+Przykład 1: Porównanie aplikacji napisanej w Spring z aplikacja w Spring Boot
 \begin{itemize}
 \item prosta aplikacja pozwalająca na tworzenie i wyświetlanie rekordów w bazie danych
 \item wykorzystuje silnik Thymeleaf w warstwie prezentacji
 \item wykorzystuje bazę danych H2
-\item znaczna różnica w ilości napisanego przez programistę kodu
+\item aplikacja napisana bez Spring Boot zawiera dużą ilość dodatkowego kodu - konfiguracja
 \end{itemize}
 \end{frame}
 
@@ -196,7 +206,31 @@ Istnieje możliwość tworzenia własnych \textit{endpointów} jak również roz
 
 \begin{frame}
 \frametitle{Struktura projektu i dobre praktyki}
+\begin{itemize}
+\item Używanie automatycznej konfiguracji i starterów, gdy tylko jest to możliwe - dzięki temu mamy pewność, że nie będziemy mieli problemów np. z niedopasowanymi wersjami zależności
+\item Unikanie umieszczanie klas w domyślnym pakiecie (sytuacja, gdy nie podamy nazwy pakietu w pliku) - pozwala to uniknąć problemów z @ComponentScan
+\item Klasa z metodą main powinna się znaleźć na górze hierarchii pakietów (ang. \textit{top-level}).
+\end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Struktura projektu i dobre praktyki}
+\begin{itemize}
+\item Odpowiedni podział projektu:
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Źródła}
+\begin{itemize}
+\item Craig Walls - \textit{Spring Boot in Action}
+\item Craig Walls - \textit{Spring in Action}
+\item Iuliana Cosmina, Rob Harrop, Chris Schaefer, Clarence Ho - \textit{Pro Spring 5: An In-Depth Guide to the Spring Framework and Its Tools, Fifth Edition}
+\item Jakub Kubryński - prezentacja \textit{Spring Boot} (\href{https://www.youtube.com/watch?v=zQll41ha5_g&feature=emb_title}{link})
+\item Oficjalna dokumentacja (\href{https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html}{link})
+\item Strona \textit{mkyong.com} (\href{https://mkyong.com/spring-boot/}{link})
+\item Strona \textit{baeldung.com} (\href{https://www.baeldung.com/}{link})
+\end{itemize}
+\end{frame}
 
 \end{document}
