@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Spring Boot example app</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th> ID </th>
+				<th> Name </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="project : ${projects}">
+				<td th:text="${project.id}"></td>
+				<td th:text="${project.name}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<a th:href="@{/projects/addProjectForm}"> Add new project</a>
+</body>
+</html>

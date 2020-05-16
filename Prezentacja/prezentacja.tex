@@ -81,9 +81,13 @@ Spring Boot nie jest więc jedynie narzędziem do szybkiego generowania projekt�
 
 \begin{frame}
 \frametitle{Aplikacja w Spring vs. Spring Boot}
-Przykład 1: Porównanie aplikacji napisanej w Spring z analogiczną w Spring Boot \\
-\textbf{Tutaj jakies madre porownanie jednego z drugim na jakims mocno wymownym przykladzie. Moze byc jakis z baza danych. Pokazać jak np. zmienic port i co to jest plik properties.}\\
-Albo to (Thymeleaf) bo w sumie w temacie: \url{https://www.baeldung.com/spring-vs-spring-boot?fbclid=IwAR1Fc4nibRyxSLkO0jIHQSUBS0xtLhQPyXlv1H7kMzAWD1R1sQ0_hxyJqGg}
+Przykład 1: Porównanie aplikacji napisanej w Spring z analogiczną w Spring Boot 
+\begin{itemize}
+\item prosta aplikacja pozwalająca na tworzenie i wyświetlanie rekordów w bazie danych
+\item wykorzystuje silnik Thymeleaf w warstwie prezentacji
+\item wykorzystuje bazę danych H2
+\item znaczna różnica w ilości napisanego przez programistę kodu
+\end{itemize}
 \end{frame}
 
 \section{Działanie Spring Boot}
@@ -98,21 +102,23 @@ Albo to (Thymeleaf) bo w sumie w temacie: \url{https://www.baeldung.com/spring-v
     \item adnotacja @SpringBootApplication
     \item klasa SpringApplication
 \end{itemize}
-\item Zrozumienie ich działania pozwala w łatwy sposób kontrolować to, co dzieje się podczas konfiguracji aplikacji.
+\item Klasa SpringApplication odpowiada m.in. za uruchomienie aplikacji i stworzenie instancji ApplicationContext.
+\item W dalszej części skupimy się na adnotacji @SpringBootApplication.
 \end{itemize}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Adnotacja @SpringBootApplication}
 \begin{itemize}
 \item Umieszczona zwykle na poziomie głównej klasy w aplikacji 
-\item Równoważna trzem innym adnotacjom z ich domyślnymi atrybutami:
+\item Równoważna trzem innym adnotacjom:
 \begin{itemize}
     \item @Configuration
     \item @EnableAutoConfiguration
     \item @ComponentScan
 \end{itemize}
-\item \textbf{DODAC DO NOTATEK: pokazac ze tak faktycznie jest - go to declaration}
+\item Możemy to zobaczyć dzięki opcji \lstinline{Open Declaration} w Eclipse.
 \item Te adnotacje są częścią frameworka Spring
 \item Aby nie wchodzić zbytnio w szczegóły działania samego Springa skupimy się na drugiej i trzeciej.
 \end{itemize}
@@ -121,32 +127,21 @@ Albo to (Thymeleaf) bo w sumie w temacie: \url{https://www.baeldung.com/spring-v
 \begin{frame}
 \frametitle{Adnotacja @ComponentScan}
 \begin{itemize}
-\item używana razem z adnotacją @Configuration
 \item odpowiada za skanowanie w celu poszukiwania w projekcie komponentów (\textit{Spring Bean})
 \item użycie jej bez atrybutów oznacza: znajdź komponenty w tym pakiecie oraz wszystkich pod-pakietach
 \item komponenty znalezione w ten sposób mogą być następnie m.in. wstrzykiwane za pomocą adnotacji @Autowired
-\item adnotacja daje sporo możliwości - pozwala m.in. podać pakiet bazowy czy definiować, które komponenty powinny zostać pominięte
-\item ponieważ jednak @SpringBootApplication używa jej w sposób domyślny, nie będziemy się na tym skupiać
-\item Przykład 3: Przykład użycia @ComponentScan
+\item daje dużo możliwości, m.in. pozwala zdefiniować, które komponenty powinny zostać pominięte - my skupimy się na przypadku bazowym
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Adnotacja @EnableAutoConfiguration}
-\textbf{go to declaration na jakiejs autokonfiguracji zeby pokazac ze to tam faktycznie jest}
 \begin{itemize}
 \item Wprowadza do działania system automatycznej konfiguracji
-\item Celem jest dokonanie przez framework automatycznej konfiguracji aplikacji na podstawie zawartości \textit{classpath} - czyli w skrócie na podstawie naszych komponentów i zależności z pliku POM
+\item Celem jest dokonanie przez framework automatycznej konfiguracji aplikacji na podstawie zawartości \textit{classpath}
 \item Mechanizm jest nieinwazyjny - automatyczna konfiguracja jest wdrażana tylko wtedy, gdy spełnione są odpowiednie warunki: dodaliśmy odpowiednie zależności i nie nadpisaliśmy konfiguracji sami
 \item Takie podejście sprawia, że chcąc zrobić coś niestandardowo nie musimy ,,walczyć'' z frameworkiem.
-\item Przykład 4: Przykład użycia @EnableAutoConfiguration
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Klasa SpringApplication}
-\begin{itemize}
-\item 
+\item Przykład 3: Adnotacje @ComponentScan i @EnableAutoConfiguration
 \end{itemize}
 \end{frame}
 
@@ -174,9 +169,10 @@ Albo to (Thymeleaf) bo w sumie w temacie: \url{https://www.baeldung.com/spring-v
 \begin{itemize}
 \item Narzędzie pozwalające monitorować i zarządzać aplikacją m.in. za pomocą specjalnego zestawu \textit{endpointów} HTTP.
 \item Możemy monitorować np.: stan aplikacji (ang. \textit{health}), listę komponentów wchodzących w skład aplikacji czy listę \textit{endpointów} aplikacji.
-\item W pliku \textit{application.properties} możemy łatwo konfigurować dostępność tych \textit{endpointów} - nie wszystkie dostępne są domyślnie (od wersji 2.0 większość jest domyślnie wyłączona).
+\item W pliku \lstinline{application.properties} możemy łatwo konfigurować dostępność tych \textit{endpointów} - nie wszystkie dostępne są domyślnie (od wersji 2.0 większość nie jest).
+\item Endpoint bazowy: \lstinline{/actuator}
 \item Rozbudowane narzędzie, tutaj zaprezentowane tylko podstawy.
-\item Przykład 5: użycie Spring Boot Actuator na prostej aplikacji CRUD.
+\item Przykład 4: użycie Spring Boot Actuator na prostej aplikacji.
 \end{itemize}
 \end{frame}
 
@@ -187,11 +183,11 @@ Niektóre \textit{endpointy}:
 \item \lstinline{health} - podsumowanie stanu naszej aplikacji
 \item \lstinline{shutdown} - wyłączenie aplikacji
 \item \lstinline{info} - ogólne informacje
-\item \lstinline{bean} - lista komponentów Spring-owych
+\item \lstinline{beans} - lista komponentów Spring-owych
 \item \lstinline{logfile} - logi aplikacji
 \item \lstinline{metrics} - szczegółowe metryki aplikacji
 \item \lstinline{mappings} - mapowania ścieżek (\lstinline{@RequestMapping})
-\item \lstinline{httptrace} - ostatnie zapytania HTTP
+\item \lstinline{httptrace} - ostatnie zapytania HTTP (konfiguracja)
 \end{itemize}
 Istnieje możliwość tworzenia własnych \textit{endpointów} jak również rozszerzania funkcjonalności tych domyślnych.
 \end{frame}
@@ -202,22 +198,5 @@ Istnieje możliwość tworzenia własnych \textit{endpointów} jak również roz
 \frametitle{Struktura projektu i dobre praktyki}
 \end{frame}
 
-\section{Testowanie za pomocą Spring Boot}
-
-\begin{frame}
-\frametitle{Testowanie za pomocą Spring Boot}
-\end{frame}
-
-\section{Konfiguracja w Spring Boot}
-
-\begin{frame}
-\frametitle{Plik .properties}
-\end{frame}
-
-\section{Integracja ze Spring Security}
-
-\begin{frame}
-\frametitle{}
-\end{frame}
 
 \end{document}
