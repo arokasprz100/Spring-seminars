@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Spring Boot example app</title>
+	<meta charset="UTF-8">
+	<title>Spring Boot example application</title>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
-<body>
-	<h1> New project added.</h1>
-	<a th:href="@{/projects/}"> Go back to project list </a>
+<body class="text-center">
+	<h1 class="bg-dark text-white p-3"> (Very) simple project manager </h1>
+	
+	<h2> New project added.</h2>
+	
+	<ul class="list-group p-2">
+		<li> <a th:href="@{/projects/}" class="list-group-item"> Go back to project list </a> </li>
+	</ul>
+
 </body>
 </html>

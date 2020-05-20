@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Spring Boot example app</title>
+	<meta charset="UTF-8">
+	<title>Spring Boot example application</title>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
-<body>
-	<table>
+<body class="text-center">
+	<h1 class="bg-dark text-white p-3"> (Very) simple project manager </h1>
+
+	<table class="table">
 		<thead>
 			<tr>
-				<th> ID </th>
-				<th> Name </th>
+				<th scope="col"> ID </th>
+				<th scope="col"> Name </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,6 +24,9 @@
 		</tbody>
 	</table>
 	
-	<a th:href="@{/projects/addProjectForm}"> Add new project</a>
+	<ul class="list-group p-2">
+		<li> <a th:href="@{/projects/addProjectForm}" class="list-group-item"> Add new project</a> </li>
+	</ul>
+	
 </body>
 </html>

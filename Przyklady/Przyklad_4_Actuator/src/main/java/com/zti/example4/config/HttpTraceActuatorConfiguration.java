@@ -1,4 +1,4 @@
-package com.zti.example4.httptrace;
+package com.zti.example4.config;
 
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;

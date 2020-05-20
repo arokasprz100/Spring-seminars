@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 // Obejrzec jak wyglada implementacja
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 
-@SpringBootApplication
+// @SpringBootApplication
 // @Configuration
-// @ComponentScan
+@ComponentScan
 // @EnableAutoConfiguration
 public class Example3Application {
 	

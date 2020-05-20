@@ -1,4 +1,4 @@
-package com.zti.example1a.project.model;
+package com.zti.example1a.project;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

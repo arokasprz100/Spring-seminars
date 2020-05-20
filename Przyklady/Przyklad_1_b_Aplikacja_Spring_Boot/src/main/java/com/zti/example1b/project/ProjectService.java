@@ -1,8 +1,7 @@
-package com.zti.example1a.project.service;
+package com.zti.example1b.project;
 
 import java.util.List;
 
-import com.zti.example1a.project.model.Project;
 
 public interface ProjectService {
 	

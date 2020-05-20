@@ -1,4 +1,4 @@
-package com.zti.example4.project.controller;
+package com.zti.example1b.project;
 
 import java.util.List;
 
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zti.example4.project.model.Project;
-import com.zti.example4.project.service.ProjectService;
 
 @Controller
 @RequestMapping("/projects")
