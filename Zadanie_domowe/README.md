@@ -14,4 +14,61 @@ W ramach zadania domowego rozwijać będziemy aplikację stanowiąca bazę przyk
 
 ### Dodanie do aplikacji obsługi Spring Security
 
+Aby dodać do aplikacji obsługę Spring Security należy:
+
+1.  Dodać do projektu dependencję spring-boot-starter-security.
+
+        <dependency>
+         <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+2.  Stworzyć tabelę bazodanową korzystając np. z serwisu DBaaS ElephantSQL.
+
+W bazie powinny się znaleźć następujące tabele:
+
+ *  tabela reprezentująca użytkownika z jego danymi, takimi jak nazwa oraz hasło,
+ *  tabela reprezentująca rolę użytkownika zawierająca nazwę użytkownika oraz jego rolę np. user, admin.
+    
+Dane o bazie danych należy zawrzeć w pliku application.properties, przykładowo:
+
+    spring.datasource.url=jdbc:postgresql://localhost/testdb
+    spring.datasource.username=postgres
+    spring.datasource.password=123
+
+3. Nadpisać automatyczną konfigurację Spring Security tak jak pokazano w przykładzie SpringSecurityJDBCAuthenticationPostgreSQL. 
+
+        public class SecurityConfig extends WebSecurityConfigurerAdapter { 
+
+         @Autowired
+        	DataSource dataSource;
+ 
+	        @Autowired
+	        public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+             ...
+	        }
+ 
+          @Override
+	        protected void configure(HttpSecurity http) throws Exception {
+	        	...
+	        }
+        }
+
 ### Dodanie do aplikacji testów
+
+1. Dodać do projektu dependencję spring-boot-starter-test.
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <version>2.1.6.RELEASE</version>
+        </dependency>
+
+2. Przetestować aplikację pod względem poprawności działania autoryzacji użytkownika stosując adnotację
+
+       @SpringBootTest 
+       
+(na podstawie przykładu testów SpringSecurityJdbcAuthenticationPostgreSqlApplicationTests.java umieszczonych w projekcie        SpringSecurityJDBCAuthenticationPostgreSQL).
+
+3. Przetestować aplikację bez podnoszenia serwera Tomcat stosując MockMvc na podstawie przykładu testu SimpleControllerTest.java umieszczonego w projekcie SpringBootTesting.  
