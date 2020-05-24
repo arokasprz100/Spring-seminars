@@ -17,7 +17,7 @@ Następnie uruchamiamy narzędzie STS za pomocą polecenia:
 ```
 /opt/sts/SpringToolSuite4 
 ```
-
+Aby zaimportować projekt, wybieramy opcje `File` > `Open Projects from File System` > `Directory`. Następnie wskazujemy katalog zawierający przykład nr 4 i naciskamy `Finish`. 
 
 
 Otwieramy przeglądarkę i wypisujemy:
