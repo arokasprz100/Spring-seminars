@@ -9,6 +9,23 @@ W ramach zadania domowego rozwijać będziemy aplikację stanowiąca bazę przyk
  * dodanie do aplikacji testów
 
 ### Uruchomienie projektu w środowisku pracowni
+W celu sklonowania projektu, w środowisku pracowni, w wybranym przez siebie katalogu, wykonujemy polecenie:
+```
+git clone https://github.com/arokasprz100/Spring-seminars/
+```
+Następnie uruchamiamy narzędzie STS za pomocą polecenia:
+```
+/opt/sts/SpringToolSuite4 
+```
+
+
+
+Otwieramy przeglądarkę i wypisujemy:
+```
+http://localhost:8095/
+```
+W tym momencie pojawi się strona główna naszej aplikacji bazowej.
+
 
 ### Dodanie do aplikacji obsługi edycji i usuwania rekordów
 
