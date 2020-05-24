@@ -33,14 +33,14 @@ W tym momencie pojawi się strona główna naszej aplikacji bazowej.
 ### Dodanie do aplikacji testów
 
 1. Dodać do projektu dependencję spring-boot-starter-test.
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <version>2.1.6.RELEASE</version>
-        </dependency>
-
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+    <version>2.1.6.RELEASE</version>
+</dependency>
+```
 2. Przetestować aplikację pod względem poprawności działania autoryzacji użytkownika stosując adnotację
 
        @SpringBootTest 
