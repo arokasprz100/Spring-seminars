@@ -19,8 +19,9 @@ Następnie uruchamiamy narzędzie STS za pomocą polecenia:
 ```
 Aby zaimportować projekt, wybieramy opcje `File` > `Open Projects from File System` > `Directory`. Następnie wskazujemy katalog zawierający przykład nr 4 i naciskamy `Finish`. 
 
+Następnie naciskamy prawym przyciskiem myszy na projekt, wybieramy: `Maven` > `Update project`. Odczekujemy chwilę i następnie uruchamiamy przykład: ponownie naciskamy prawym przyciskiem myszy na projekt, wybieramy `Run As` > `Spring Boot App`. 
 
-Otwieramy przeglądarkę i wypisujemy:
+Po uruchomieniu przykładu otwieramy przeglądarkę i wypisujemy:
 ```
 http://localhost:8095/
 ```
@@ -57,8 +58,8 @@ Dane o bazie danych należy zawrzeć w pliku application.properties, przykładow
 
         public class SecurityConfig extends WebSecurityConfigurerAdapter { 
 
-         @Autowired
-        	DataSource dataSource;
+          @Autowired
+          DataSource dataSource;
  
 	        @Autowired
 	        public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -67,7 +68,7 @@ Dane o bazie danych należy zawrzeć w pliku application.properties, przykładow
  
           @Override
 	        protected void configure(HttpSecurity http) throws Exception {
-	        	...
+	           ...
 	        }
         }
 
