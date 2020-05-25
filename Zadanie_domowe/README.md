@@ -158,6 +158,28 @@ Następnie testujemy zaimplementowaną funkcjonalność dodając i usuwając kil
 
 
 ### Użycie narzędzia Spring Boot Actuator
+W drugiej części zadania posłużymy się narzędziem Spring Boot Actuator. Mając uruchomiony projekt wpisujemy w wyszukiwarkę:
+```
+http://localhost:8095/actuator
+```
+w tym miejscu wyświetlają nam się wszystkie dostępne `endpointy`. Na początek sprawdźmy stan aplikacji, wybierając `endpoint` `health`:
+```
+http://localhost:8095/actuator/health
+```
+Jeśli aplikacja działa prawidłowo powinniśmy zobaczyć wiadomość `{"status":"UP"}`. Następnie będziemy chcieli zobaczyć historię wykonanych zapytań HTTP. W tym celu wpisujemy:
+```
+http://localhost:8095/actuator/httptrace
+```
+Szukamy tutaj wykonanych przez nas wcześniej operacji `delete`. Następnie sprawdzimy zawartość pliku z logami. W tym celu wpisujemy:
+```
+http://localhost:8095/actuator/logfile
+```
+Na koniec wyłączymy za pomocą Spring Boot Actuator naszą aplikację. Ponieważ w tym celu należy posłużyć się metodą POST, najprościej będzie to zrobić za pomocą narzędzia CURL:
+```
+curl -X POST http://localhost:8095/actuator/shutdown
+```
+Powinniśmy otrzymać odpowiedź `{"message":"Shutting down, bye..."}` a aplikacja powinna się wyłączyć.
+
 
 ### Dodanie do aplikacji testów
 
