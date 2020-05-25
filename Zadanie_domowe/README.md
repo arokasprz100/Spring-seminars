@@ -197,15 +197,15 @@ Powinniśmy otrzymać odpowiedź `{"message":"Shutting down, bye..."}` a aplikac
 Przed podjęciem się pisania testów należy dodać do kodu klasy Project dwa konstruktory:
 
 ```
-	public Project() {
-    }
-	
-	public Project(Long id, String name, String course, String supervisor) {
-		this.id = id;
-		this.course = course;
-		this.name = name;
-		this.supervisor = supervisor;
-	}
+public Project() {
+}
+
+public Project(Long id, String name, String course, String supervisor) {
+	this.id = id;
+	this.course = course;
+	this.name = name;
+	this.supervisor = supervisor;
+}
 ```
 Pozwoli to na łatwiejsze zdefiniowanie parametrów projektu podczas testowania.
 Testując aplikację, której repozytorium danych oparte jest na repozytorium JPA należy użyć adnotacji 
