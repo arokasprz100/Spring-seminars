@@ -8,16 +8,10 @@
 </head>
 <body class="text-center">
 	<h1 class="bg-dark text-white p-3"> (Very) simple project manager </h1>
+	
+	<ul class="list-group p-2">
+		<li><a th:href="@{/projects/}" class="list-group-item"> View projects </a></li>
+	</ul>
 
-	<form action="#" th:action="@{/projects/add}" 
-		th:object="${project}" method="post" class="col-lg-6 offset-lg-3 ">
-		
-		<div class="form-group justify-content-center">
-			<label for="name"> Name </label>
-			<input type="text" th:field="*{name}" id="name" class="form-control" placeholder="Name">
-		</div>
-		<input type="submit" value="Add Project" class="btn btn-primary">
-		
-	</form>
 </body>
 </html>

@@ -2,9 +2,10 @@
 
 ## Spring Boot - zadanie domowe
 
-W ramach zadania domowego rozwijać będziemy aplikację stanowiąca bazę przykładów zaprezentowanych w trakcie seminarium. Punkt wyjścia stanowić będzie przykład **4**. Celem ćwiczenia będzie:
+W ramach zadania domowego rozwijać będziemy aplikację stanowiąca bazę przykładów zaprezentowanych w trakcie seminarium. Ponieważ w czasie prezentacji skupiliśmy się na działaniu Spring Boota, nie było możliwości przećwiczenia pisania aplikacji - zajmiemy się tym w ramach tego zadania. Podobne zadanie wykonywaliśmy już w ramach ćwiczeń laboratoryjnych. Punkt wyjścia stanowić będzie przykład **4**. Celem ćwiczenia będzie:
  * uruchomienie projektu na dostępnych w ramach kursu maszynach wirtualnych
- * dodanie do aplikacji obsługi edycji i usuwania rekordów
+ * dodanie do aplikacji obsługi usuwania rekordów
+ * badanie działania aplikacji za pomocą narzędzia Spring Boot Actuator
  * dodanie do aplikacji testów
 
 ### Uruchomienie projektu w środowisku pracowni
@@ -27,8 +28,136 @@ http://localhost:8095/
 W tym momencie pojawi się strona główna naszej aplikacji bazowej.
 
 
-### Dodanie do aplikacji obsługi edycji i usuwania rekordów
+### Dodanie do aplikacji obsługi usuwania rekordów
+Na początek będziemy chcieli dodać do naszego modelu kilka pól (kolumny w tabeli bazy danych). Będą one odpowiadały za przechowywanie informacji o nazwie kursu, w ramach którego realizowany jest projekt, oraz o prowadzącym kursu. W tym celu edytujemy plik `Project.java` znajdujący się w pakiecie `com.zti.example4.project` tak, by znajdująca się tam klasa wyglądała jak poniżej:
 
+```
+@Entity
+public class Project {
+    
+    private Long id;
+    
+    private String name;
+    
+    private String course;
+    
+    private String supervisor;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getCourse() {
+        return course;
+    }
+    
+    public void setCourse(String course) {
+        this.course = course;
+    }
+    
+    public String getSupervisor() {
+        return supervisor;
+    }
+    
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+}
+```
+
+Następnie edytujemy istniejące szablony służące do wyświetlania oraz dodawania projektów. W tym celu w pliku `add-project.html` (szablon formularza do dodawania projektów) dodajemy w odpowiednim miejscu następujący kod:
+```
+<div class="form-group justify-content-center">
+    <label for="course"> Course </label>
+    <input type="text" th:field="*{course}" id="course" class="form-control" placeholder="Course">
+</div>
+
+<div class="form-group justify-content-center">
+    <label for="supervisor"> Supervisor </label>
+    <input type="text" th:field="*{supervisor}" id="supervisor" class="form-control" placeholder="Supervisor">
+</div>
+```
+Kod ten odpowiada za dodanie dwóch dodatkowych pól do szablonu. Użyty został tutaj `Bootstrap` (np. `class="form-group justify-content-center"`). Analogicznie edytujemy szablon odpowiedzialny za wyświetlanie projektów (`list-projects.html`). W odpowiednim miejscu dodajemy tam kod: 
+```
+<th scope="col"> Course </th>
+<th scope="col"> Supervisor </th>
+```
+oraz:
+```
+<td th:text="${project.course}"></td>
+<td th:text="${project.supervisor}"></td>
+```
+
+W tym momencie przystępujemy do dodania operacji usuwania rekordu z bazy danych. Podobnie w odpowiednim miejscu w pliku `list-projects.html` dodajemy poniższy fragment kodu:
+```
+<th scope="col"> Actions </th>
+```
+oraz, w innym miejscu tego pliku:
+```
+<td><a th:href="@{/projects/{id}/delete(id=${project.id})}" th:text="Delete"></a></td>
+```
+Mamy tutaj przykład używanego przez Thymeleaf sposobu zapisu URL. Następnie dodajemy odpowiedni `endpoint` w kontrolerze odpowiedzialnym za projekty:
+```
+@GetMapping
+@RequestMapping("/{id}/delete")
+public String deleteProject(@PathVariable String id, Model model) {
+    projectService.deleteById(Long.parseLong(id));
+    model.addAttribute("id", id);
+    return "delete-project-confirm";
+}
+```
+Następnie w interfejsie `ProjectService` dodajemy deklarację metody:
+```
+void deleteById(Long id);
+```
+oraz jej implementację w klasie `ProjectServiceImpl`:
+```
+@Override
+public void deleteById(Long id) {
+    projectRepository.deleteById(id);
+}
+```
+Należy tutaj zwrócić uwagę, że nie musieliśmy niczego dodawać w interfejsie `ProjectRepository`. Pozostało jeszcze stworzyć szablon `delete-project-confirm.html` w katalogu `templates` i dodać do niego następujący kod:
+```
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot example application</title>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body class="text-center">
+    <h1 class="bg-dark text-white p-3"> (Very) simple project manager </h1>
+    
+    <h2> Project with id: <span th:utext="${id}"></span> deleted.</h2>
+    
+    <ul class="list-group p-2">
+        <li> <a th:href="@{/projects/}" class="list-group-item"> Go back to project list </a> </li>
+    </ul>
+
+</body>
+</html>
+```
+
+Następnie testujemy zaimplementowaną funkcjonalność dodając i usuwając kilka rekordów. Projekt można oczywiście dowolnie sobie rozwinąć, np. dodać walidację wprowadzanych danych czy możliwość ich edycji. Po zakończeniu testów nie wyłączamy jeszcze aplikacji.
+
+
+### Użycie narzędzia Spring Boot Actuator
 
 ### Dodanie do aplikacji testów
 
@@ -42,9 +171,9 @@ W tym momencie pojawi się strona główna naszej aplikacji bazowej.
 </dependency>
 ```
 2. Przetestować aplikację pod względem poprawności działania autoryzacji użytkownika stosując adnotację
-
-       @SpringBootTest 
-       
+```
+@SpringBootTest 
+```
 (na podstawie przykładu testów SpringSecurityJdbcAuthenticationPostgreSqlApplicationTests.java umieszczonych w projekcie        SpringSecurityJDBCAuthenticationPostgreSQL).
 
 3. Przetestować aplikację bez podnoszenia serwera Tomcat stosując MockMvc na podstawie przykładu testu SimpleControllerTest.java umieszczonego w projekcie SpringBootTesting.  
