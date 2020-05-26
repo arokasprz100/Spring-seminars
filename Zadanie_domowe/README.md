@@ -183,7 +183,7 @@ Powinniśmy otrzymać odpowiedź `{"message":"Shutting down, bye..."}` a aplikac
 
 ### Dodanie do aplikacji testów
 
-1. Dodać do projektu dependencję spring-boot-starter-test.
+1. Aby móc testować aplikację w środowisku Spring Boot należy dodać do projektu dependencję spring-boot-starter-test.
 ```
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -192,10 +192,84 @@ Powinniśmy otrzymać odpowiedź `{"message":"Shutting down, bye..."}` a aplikac
     <version>2.1.6.RELEASE</version>
 </dependency>
 ```
-2. Przetestować aplikację pod względem poprawności działania autoryzacji użytkownika stosując adnotację
-```
-@SpringBootTest 
-```
-(na podstawie przykładu testów SpringSecurityJdbcAuthenticationPostgreSqlApplicationTests.java umieszczonych w projekcie        SpringSecurityJDBCAuthenticationPostgreSQL).
+2. Kolejno należy przetestować aplikację pod względem poprawności zapisywania, usuwania i wyświetlania danych z bazy.
 
-3. Przetestować aplikację bez podnoszenia serwera Tomcat stosując MockMvc na podstawie przykładu testu SimpleControllerTest.java umieszczonego w projekcie SpringBootTesting.  
+Przed podjęciem się pisania testów należy dodać do kodu klasy Project dwa konstruktory:
+
+```
+public Project() {
+}
+
+public Project(Long id, String name, String course, String supervisor) {
+	this.id = id;
+	this.course = course;
+	this.name = name;
+	this.supervisor = supervisor;
+}
+```
+Pozwoli to na łatwiejsze zdefiniowanie parametrów projektu podczas testowania.
+Testując aplikację, której repozytorium danych oparte jest na repozytorium JPA należy użyć adnotacji 
+``` 
+@DataJpaTest
+```
+w połączeniu z 
+```
+@RunWith(SpringRunner.class)
+```
+Pierwsza z adnotacji umożliwia wyłączenie automatycznej konfiguracji Spring Boot i zastosowanie konfiguracji istotnej podczas testów JPA. 
+
+Klasę testową umieszczamy w katalogu /src/test/java. 
+```
+@RunWith(SpringRunner.class)
+@DataJpaTest
+class HomeworkApplicationTests {
+
+	@Autowired
+	private ProjectRepository projectRepository;
+	
+	
+	@Test
+	void testSaveProject() {
+		Project project = new Project(1L,"project","course","supervisor");
+		projectRepository.save(project);
+		assertNotNull(project);
+	}
+	
+	@Test
+	void testDeleteProject() {
+         ...
+	}
+	
+	@Test
+	void findAllProjects() {
+          ...
+	}
+
+}
+```
+Brakujące metody testowe należy uzupełnić zgodnie z podanym przykładem.
+
+Drugą opcję testowania aplikacji umożliwia nam adnotacja
+```
+@AutoConfigureMockMvc
+```
+W przykładowym tescie poniżej uruchamiany jest pełen kontekst aplikacji Spring, ale bez serwera. Sprawdzana jest poprawność przetwarzania żądania HTTP z zapytaniem o projekty.
+
+```
+@RunWith(SpringRunner.class)
+@WebMvcTest(ProjectController.class)
+class HomeworkApplicationControllerTests {
+	
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void getProjectsTest() throws Exception {
+        mockMvc
+                .perform(get("/"))
+                .andExpect(status().isOk());
+        
+    }
+}
+```
+Test należy umieścić w katalogu /src/test/java i dopisać do niego sprawdzanie poprawności działania kontrolera dla pozostałych endpointów obsługiwanych przez aplikację. 
