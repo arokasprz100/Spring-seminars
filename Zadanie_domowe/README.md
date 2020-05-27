@@ -112,8 +112,7 @@ oraz, w innym miejscu tego pliku:
 ```
 Mamy tutaj przykład używanego przez Thymeleaf sposobu zapisu URL. Następnie dodajemy odpowiedni `endpoint` w kontrolerze odpowiedzialnym za projekty:
 ```
-@GetMapping
-@RequestMapping("/{id}/delete")
+@GetMapping("/{id}/delete")
 public String deleteProject(@PathVariable String id, Model model) {
     projectService.deleteById(Long.parseLong(id));
     model.addAttribute("id", id);

@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 
 // @SpringBootApplication
-// @Configuration
-@ComponentScan
-// @EnableAutoConfiguration
+@Configuration
+// @ComponentScan
+@EnableAutoConfiguration
 public class Example3Application {
 	
 

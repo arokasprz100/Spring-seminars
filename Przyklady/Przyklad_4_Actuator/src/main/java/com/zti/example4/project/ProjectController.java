@@ -17,24 +17,22 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 	
-	@GetMapping
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String getProjects(Model model) {
 		List<Project> projects = projectService.findAll();
 		model.addAttribute("projects", projects);
 		return "list-projects";
 	}
 	
-	@GetMapping
-	@RequestMapping("/addProjectForm")
+	@GetMapping("/addProjectForm")
 	public String showAddProjectForm(Project project) {
 		return "add-project";
 	}
 	
-	@PostMapping
-	@RequestMapping("/add")
+	@PostMapping("/add")
 	public String addProject(Project project, BindingResult result, Model model) {
 		projectService.save(project);
 		return "add-project-confirm";
 	}
+	
 }
